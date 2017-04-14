@@ -13,19 +13,19 @@
     <h1 class="hello" align="center">Play</h1>
     <table align="center" border="1">
         <tr>
-            <th class="celltd"><a href="<c:url value="/push/1"/>">push</a></th>
-            <th class="celltd">2</th>
-            <th class="celltd">3</th>
+            <th class="celltd"><a class="c" href="<c:url value="/push/1"/>">${x1}.</a></th>
+            <th class="celltd"><a class="c" href="<c:url value="/push/2"/>">${x2}.</a></th>
+            <th class="celltd"><a class="c" href="<c:url value="/push/3"/>">${x3}.</a></th>
         </tr>
         <tr>
-            <th class="celltd">4</th>
-            <th class="celltd">5</th>
-            <th class="celltd">6</th>
+            <th class="celltd"><a class="c" href="<c:url value="/push/4"/>">${x4}.</a></th>
+            <th class="celltd"><a class="c" href="<c:url value="/push/5"/>">${x5}.</a></th>
+            <th class="celltd"><a class="c" href="<c:url value="/push/6"/>">${x6}.</a></th>
         </tr>
         <tr>
-            <th class="celltd">7</th>
-            <th class="celltd">8</th>
-            <th class="celltd">9</th>
+            <th class="celltd"><a class="c" href="<c:url value="/push/7"/>">${x7}.</a></th>
+            <th class="celltd"><a class="c" href="<c:url value="/push/8"/>">${x8}.</a></th>
+            <th class="celltd"><a class="c" href="<c:url value="/push/9"/>">${x9}.</a></th>
         </tr>
     </table>
   </body>

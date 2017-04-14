@@ -21,7 +21,9 @@ public class XOImpl implements XOInterface {
 
     @Override
     public ArrayList<Integer> model() {
-
-        return null;
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        list.addAll(modelX);
+        list.addAll(modelO);
+        return list;
     }
 }
