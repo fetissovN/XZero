@@ -20,7 +20,26 @@ public class XOImpl implements XOInterface {
 
     public boolean win(){
         boolean win = false;
-        
+        ArrayList<Integer> mass = new ArrayList<Integer>();
+        mass.add(1);
+        mass.add(3);
+        mass.add(4);
+        for (Integer m: mass){
+            if (modelX.contains(1+m)&&modelX.contains(1+m+m)){
+                win=true;
+            }
+        }
+        for (Integer m: mass){
+            if (modelX.contains(5+m)&&modelX.contains(5-m)){
+                win=true;
+            }
+        }
+        for (Integer m: mass){
+            if (modelX.contains(9-m)&&modelX.contains(9-m-m)){
+                win=true;
+            }
+        }
+
         return win;
     }
 
@@ -36,13 +55,13 @@ public class XOImpl implements XOInterface {
     @Override
     public void pushX(int id) {
         mapList.put(id,"X");
-//     modelX.add(id);
+        modelX.add(id);
     }
 
     @Override
     public void pushO(int id) {
         mapList.put(id,"O");
-//        modelO.add(id);
+        modelO.add(id);
     }
 
     @Override
