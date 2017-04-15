@@ -16,26 +16,38 @@ public class XOImpl implements XOInterface {
         for (int i=0;i<9;i++){
             mapList.put(i,"");
         }
+        modelX.clear();
+        modelO.clear();
     }
 
-    public boolean win(){
+    public boolean win(String var){
         boolean win = false;
+        ArrayList<Integer> list = null;
+        if (var.equals("x")){
+            list = modelX;
+        }else if (var.equals("o")){
+            list = modelO;
+        }
         ArrayList<Integer> mass = new ArrayList<Integer>();
+        mass.clear();
         mass.add(1);
         mass.add(3);
         mass.add(4);
         for (Integer m: mass){
-            if (modelX.contains(1+m)&&modelX.contains(1+m+m)){
+            if (list.contains(0+m)&&list.contains(0+m+m)&&list.contains(0)){
                 win=true;
             }
         }
         for (Integer m: mass){
-            if (modelX.contains(5+m)&&modelX.contains(5-m)){
+            if (list.contains(4+m)&&list.contains(4-m)&&list.contains(4)){
+                win=true;
+            }
+            if (list.contains(4)&&list.contains(2)&&list.contains(6)){
                 win=true;
             }
         }
         for (Integer m: mass){
-            if (modelX.contains(9-m)&&modelX.contains(9-m-m)){
+            if (list.contains(8-m)&&list.contains(8-m-m)&&list.contains(8)){
                 win=true;
             }
         }

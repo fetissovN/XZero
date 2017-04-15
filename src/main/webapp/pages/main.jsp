@@ -29,6 +29,7 @@
                 </c:if>
             </c:forEach>
     </table>
+    <div align="center">${xWin}${oWin}</div>
     <%--<button><a href="<c:url value="/restart"/>">Restart</a></button>--%>
     <div align="center"><a href="/restart">restart</a></div>
   </body>
