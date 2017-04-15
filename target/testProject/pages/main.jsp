@@ -13,20 +13,23 @@
     <h1 class="hello" align="center">Play</h1>
     <table align="center" border="1">
         <tr>
-            <th class="celltd"><a href="<c:url value="/push/1"/>">push</a></th>
-            <th class="celltd">2</th>
-            <th class="celltd">3</th>
-        </tr>
-        <tr>
-            <th class="celltd">4</th>
-            <th class="celltd">5</th>
-            <th class="celltd">6</th>
-        </tr>
-        <tr>
-            <th class="celltd">7</th>
-            <th class="celltd">8</th>
-            <th class="celltd">9</th>
-        </tr>
+            <c:forEach items="${list}" var="entity">
+                <c:if test="${entity.key eq '3'}">
+                    </tr>
+                    <tr>
+
+                </c:if>
+                <c:if test="${entity.key eq '6'}">
+                    </tr>
+                    <tr>
+                </c:if>
+                <th class="celltd"><a class="c" href="<c:url value="/push/${entity.key}"/>">${entity.value}</a></th>
+                <c:if test="${entity.key eq '8'}">
+                    </tr>
+                </c:if>
+            </c:forEach>
     </table>
+    <%--<button><a href="<c:url value="/restart"/>">Restart</a></button>--%>
+    <div align="center"><a href="/restart">restart</a></div>
   </body>
 </html>

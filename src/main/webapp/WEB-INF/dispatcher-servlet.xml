@@ -15,4 +15,7 @@
                    cache-period="31556926"/>
 
     <mvc:annotation-driven />
+
+    <!--<bean id="xoInterface" class="com.nick.service.XOImpl">-->
+    <!--</bean>-->
 </beans>

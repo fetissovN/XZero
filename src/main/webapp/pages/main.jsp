@@ -13,20 +13,23 @@
     <h1 class="hello" align="center">Play</h1>
     <table align="center" border="1">
         <tr>
-            <th class="celltd"><a class="c" href="<c:url value="/push/1"/>">${x1}.</a></th>
-            <th class="celltd"><a class="c" href="<c:url value="/push/2"/>">${x2}.</a></th>
-            <th class="celltd"><a class="c" href="<c:url value="/push/3"/>">${x3}.</a></th>
-        </tr>
-        <tr>
-            <th class="celltd"><a class="c" href="<c:url value="/push/4"/>">${x4}.</a></th>
-            <th class="celltd"><a class="c" href="<c:url value="/push/5"/>">${x5}.</a></th>
-            <th class="celltd"><a class="c" href="<c:url value="/push/6"/>">${x6}.</a></th>
-        </tr>
-        <tr>
-            <th class="celltd"><a class="c" href="<c:url value="/push/7"/>">${x7}.</a></th>
-            <th class="celltd"><a class="c" href="<c:url value="/push/8"/>">${x8}.</a></th>
-            <th class="celltd"><a class="c" href="<c:url value="/push/9"/>">${x9}.</a></th>
-        </tr>
+            <c:forEach items="${list}" var="entity">
+                <c:if test="${entity.key eq '3'}">
+                    </tr>
+                    <tr>
+
+                </c:if>
+                <c:if test="${entity.key eq '6'}">
+                    </tr>
+                    <tr>
+                </c:if>
+                <th class="celltd"><a class="c" href="<c:url value="/push/${entity.key}"/>">${entity.value}</a></th>
+                <c:if test="${entity.key eq '8'}">
+                    </tr>
+                </c:if>
+            </c:forEach>
     </table>
+    <%--<button><a href="<c:url value="/restart"/>">Restart</a></button>--%>
+    <div align="center"><a href="/restart">restart</a></div>
   </body>
 </html>
