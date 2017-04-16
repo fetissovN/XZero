@@ -37,25 +37,33 @@ public class MainController {
     @RequestMapping(value = "/push/{id}", method = RequestMethod.GET)
     public ModelAndView push(@PathVariable("id") int id, Model model){
         ModelAndView modelAndView = new ModelAndView();
-
-        if (xo.countMap()%2==0){
-            xo.pushX(id);
+        if (!xo.checkExists(id)) {
+            if (xo.countMap() % 2 == 0) {
+                xo.pushX(id);
 //            xo.model().get(id).toString();
-            modelAndView.addObject("list",xo.model());
-            modelAndView.setViewName("main");
+                modelAndView.addObject("list", xo.model());
+                modelAndView.setViewName("main");
 
+            } else {
+                xo.pushO(id);
+                modelAndView.addObject("list", xo.model());
+                modelAndView.setViewName("main");
+            }
+            if (xo.countMap() > 4) {
+                if (xo.win("x")) {
+                    model.addAttribute("xWin", "X Win!");
+                }
+                if (xo.win("o")) {
+                    model.addAttribute("oWin", "O Win!");
+                }
+                if (xo.countMap()==9){
+                    model.addAttribute("bothLosers", "You are both losers!");
+                }
+            }
         }else {
-            xo.pushO(id);
-            modelAndView.addObject("list",xo.model());
+            modelAndView.addObject("list", xo.model());
             modelAndView.setViewName("main");
-        }
-        if (xo.countMap()>4){
-            if (xo.win("x")){
-                model.addAttribute("xWin","X Win!");
-            }
-            if (xo.win("o")){
-                model.addAttribute("oWin","O Win!");
-            }
+            model.addAttribute("duplicate", "already exists!");
         }
         System.out.println(xo.model().toString());
         return modelAndView;

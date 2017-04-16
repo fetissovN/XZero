@@ -5,12 +5,14 @@
 <html>
   <head>
         <title>XZero</title>
-      <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+      <%--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>--%>
       <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/styles.css"/> ">
       <%--<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/foundation.min.css"/> ">--%>
   </head>
   <body>
     <h1 class="hello" align="center">Play</h1>
+    <div align="center"><h2>${xWin}${oWin}${bothLosers}</h2></div>
+    <div align="center"><h6 style="color: #9e0c0f">${duplicate}</h6></div>
     <table align="center" border="1">
         <tr>
             <c:forEach items="${list}" var="entity">
@@ -29,7 +31,9 @@
                 </c:if>
             </c:forEach>
     </table>
+    <br>
+    <%--<div align="center">${xWin}${oWin}</div>--%>
     <%--<button><a href="<c:url value="/restart"/>">Restart</a></button>--%>
-    <div align="center"><a href="/restart">restart</a></div>
+    <div align="center"><button><a style="text-decoration: none" href="/restart">restart</a></button></div>
   </body>
 </html>

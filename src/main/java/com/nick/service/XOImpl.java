@@ -20,12 +20,19 @@ public class XOImpl implements XOInterface {
         modelO.clear();
     }
 
-    public boolean win(String var){
+    public boolean checkExists(int id){
+        if (modelX.contains(id)||modelO.contains(id)){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean win(String playerChar){
         boolean win = false;
         ArrayList<Integer> list = null;
-        if (var.equals("x")){
+        if (playerChar.equals("x")){
             list = modelX;
-        }else if (var.equals("o")){
+        }else if (playerChar.equals("o")){
             list = modelO;
         }
         ArrayList<Integer> mass = new ArrayList<Integer>();
