@@ -16,6 +16,6 @@
 
     <mvc:annotation-driven />
 
-    <!--<bean id="xoInterface" class="com.nick.service.XOImpl">-->
-    <!--</bean>-->
+    <bean id="xoInterface" class="com.nick.service.XOImpl">
+    </bean>
 </beans>

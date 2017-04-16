@@ -4,7 +4,11 @@ package com.nick.service;
 import java.util.HashMap;
 
 public interface XOInterface {
-    public void pushX(int id);
-    public void pushO(int id);
-    public HashMap<Integer, String> model();
+    void pushX(int id);
+    void pushO(int id);
+    void fillMap();
+    boolean checkExists(int id);
+    boolean win(String playerChar);
+    int countMap();
+    HashMap<Integer, String> model();
 }
