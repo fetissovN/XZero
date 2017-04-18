@@ -34,6 +34,6 @@
     <br>
     <%--<div align="center">${xWin}${oWin}</div>--%>
     <%--<button><a href="<c:url value="/restart"/>">Restart</a></button>--%>
-    <div align="center"><button><a style="text-decoration: none" href="/restart">restart</a></button></div>
+    <div align="center"><a style="text-decoration: none" href="/restart">restart</a></div>
   </body>
 </html>

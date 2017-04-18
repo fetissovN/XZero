@@ -44,16 +44,12 @@ public class XOImpl implements XOInterface {
             if (list.contains(0+m)&&list.contains(0+m+m)&&list.contains(0)){
                 win=true;
             }
-        }
-        for (Integer m: mass){
             if (list.contains(4+m)&&list.contains(4-m)&&list.contains(4)){
                 win=true;
             }
             if (list.contains(4)&&list.contains(2)&&list.contains(6)){
                 win=true;
             }
-        }
-        for (Integer m: mass){
             if (list.contains(8-m)&&list.contains(8-m-m)&&list.contains(8)){
                 win=true;
             }

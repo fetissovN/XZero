@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class MainController {
@@ -26,9 +27,18 @@ public class MainController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String main(Model model, ModelMap modelMap, HttpServletRequest request, HttpServletResponse response){
+    public String main(Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session){
         if (xoInterface.model().isEmpty()){
             xoInterface.fillMap();
+        }
+        if (xoInterface.countMap() > 4) {
+            if (xoInterface.win("x")) {
+                model.addAttribute("xWin", "X Win!");
+            }else if (xoInterface.win("o")) {
+                model.addAttribute("oWin", "O Win!");
+            }else if (xoInterface.countMap()==9){
+                model.addAttribute("bothLosers", "You are both losers!");
+            }
         }
 
         model.addAttribute("list", xoInterface.model());
@@ -47,23 +57,13 @@ public class MainController {
             } else {
                 xoInterface.pushO(id);
             }
-            if (xoInterface.countMap() > 4) {
-                if (xoInterface.win("x")) {
-                    model.addAttribute("xWin", "X Win!");
-                }
-                if (xoInterface.win("o")) {
-                    model.addAttribute("oWin", "O Win!");
-                }
-                if (xoInterface.countMap()==9){
-                    model.addAttribute("bothLosers", "You are both losers!");
-                }
-            }
+
         }else {
             model.addAttribute("duplicate", "already exists!");
         }
-        model.addAttribute("list", xoInterface.model());
+//        model.addAttribute("list", xoInterface.model());
 //        System.out.println(xoInterface.model().toString());
-        return "main";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/restart")
