@@ -14,6 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class MainController {
@@ -27,42 +29,52 @@ public class MainController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String main(Model model, HttpServletRequest request, HttpServletResponse response, HttpSession session){
-        if (xoInterface.model().isEmpty()){
-            xoInterface.fillMap();
+    public String main(Model model, HttpSession session){
+        HashMap<Integer,HashMap<Integer,String>> modelS = new HashMap<>();
+        if (session.getAttribute("game")==null){
+            modelS = xoInterface.createNewGame();
+//            modelS.putAll(xoInterface.createNewGame());
+            session.setAttribute("game", modelS);
+//            session.setAttribute("id", xoInterface.);
+        }else {
+            modelS.putAll((Map<? extends Integer, ? extends HashMap<Integer, String>>) session.getAttribute("game"));
         }
-        if (xoInterface.countMap() > 4) {
-            if (xoInterface.win("x")) {
+//        if (xoInterface.model().isEmpty()){
+//            xoInterface.fillMap();
+//        }
+        int id = modelS.keySet().iterator().next();
+        if (xoInterface.countMap(id) > 4) {
+            if (xoInterface.winPresice(id).equals("X")) {
                 model.addAttribute("xWin", "X Win!");
-            }else if (xoInterface.win("o")) {
+            }else if (xoInterface.winPresice(id).equals("O")) {
                 model.addAttribute("oWin", "O Win!");
-            }else if (xoInterface.countMap()==9){
-                model.addAttribute("bothLosers", "You are both losers!");
+            }else if (xoInterface.countMap(id)==9){
+                model.addAttribute("bothLoseras", "You are both losers!");
             }
         }
-
-        model.addAttribute("list", xoInterface.model());
+        model.addAttribute("list", modelS.get(0));
         return "main";
     }
 
     @RequestMapping(value = "/push/{id}", method = RequestMethod.GET)
-    public String push(@PathVariable("id") int id, Model model, HttpServletRequest request, HttpServletResponse responsee){
-        if (xoInterface.win("x")||xoInterface.win("o")){
-            model.addAttribute("list", xoInterface.model());
+    public String push(@PathVariable("id") int id, Model model, HttpSession session){
+        HashMap<Integer,HashMap<Integer,String>> modelS = new HashMap<>();
+        modelS.putAll((Map<? extends Integer, ? extends HashMap<Integer, String>>) session.getAttribute("game"));
+        int idGame = modelS.keySet().iterator().next();
+        if (xoInterface.winPresice(id)!=null){
+            model.addAttribute("list", modelS);
             return "main";
         }
-        if (!xoInterface.checkExists(id)) {
-            if (xoInterface.countMap() % 2 == 0) {
-                xoInterface.pushX(id);
+        if (!xoInterface.checkExists(id, idGame)) {
+            if (xoInterface.countMap(idGame) % 2 == 0) {
+                xoInterface.pushX(id,idGame);
             } else {
-                xoInterface.pushO(id);
+                xoInterface.pushO(id,idGame);
             }
 
         }else {
             model.addAttribute("duplicate", "already exists!");
         }
-//        model.addAttribute("list", xoInterface.model());
-//        System.out.println(xoInterface.model().toString());
         return "redirect:/";
     }
 

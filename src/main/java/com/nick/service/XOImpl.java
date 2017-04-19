@@ -5,38 +5,85 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 @Component
 public class XOImpl implements XOInterface {
-    ArrayList<Integer> modelX = new ArrayList<Integer>();
-    ArrayList<Integer> modelO = new ArrayList<Integer>();
+//    ArrayList<Integer> modelX = new ArrayList<Integer>();
+//    ArrayList<Integer> modelO = new ArrayList<Integer>();
     HashMap<Integer,String> mapList = new HashMap<Integer, String>();
+    HashMap<Integer, HashMap<Integer, String>> gamesList = new HashMap<>();
+
+    public HashMap<Integer, HashMap<Integer, String>> createNewGame(){
+//        Random random = new Random();
+        HashMap<Integer, HashMap<Integer, String>> map = new HashMap<Integer,HashMap<Integer,String>>();
+        int idGame = 1;
+        if (gamesList.size()>0) {
+            idGame = gamesList.size()+1;
+        }
+            fillMap();
+            gamesList.put(idGame,mapList);
+            map.put(idGame,mapList);
+        return map;
+        }
+
+    @Override
+    public HashMap<Integer, String> getActualGame(int id) {
+        return null;
+    }
+
 
     public void fillMap(){
+        mapList.clear();
         for (int i=0;i<9;i++){
             mapList.put(i,"");
         }
-        modelX.clear();
-        modelO.clear();
+//        modelX.clear();
+//        modelO.clear();
     }
 
-    public boolean checkExists(int id){
-        if (modelX.contains(id)||modelO.contains(id)){
+    public boolean checkExists(int id, int idGame){
+        if (gamesList.get(idGame).containsKey(id)||gamesList.get(idGame).containsKey(id)){
             return true;
         }
         return false;
     }
 
-    public boolean win(String playerChar){
-        boolean win = false;
-        ArrayList<Integer> list = null;
-        if (playerChar.equals("x")){
-            list = modelX;
-        }else if (playerChar.equals("o")){
-            list = modelO;
+    public String winPresice(int idGame){
+        String winner = null;
+        ArrayList<Integer> modelX = new ArrayList<Integer>();
+        ArrayList<Integer> modelO = new ArrayList<Integer>();
+
+        HashMap<Integer,String> map = gamesList.get(idGame);
+        for (Map.Entry<Integer,String> m: map.entrySet()){
+            if (m.getValue().equals("X")){
+                modelX.add(m.getKey());
+            }else if (m.getValue().equals("O")){
+                modelO.add(m.getKey());
+            }
         }
+        boolean winX = win(modelX);
+        boolean winO = win(modelO);
+        if (winX){
+            winner= "X";
+        }
+        if (winO){
+            winner= "O";
+        }
+
+        return winner;
+    }
+
+    public boolean win(ArrayList<Integer> listM){
+        boolean win = false;
+        ArrayList<Integer> list = listM;
+//        if (playerChar.equals("x")){
+//            list = modelX;
+//        }else if (playerChar.equals("o")){
+//            list = modelO;
+//        }
         ArrayList<Integer> mass = new ArrayList<Integer>();
-        mass.clear();
+//        mass.clear();
         mass.add(1);
         mass.add(3);
         mass.add(4);
@@ -58,8 +105,9 @@ public class XOImpl implements XOInterface {
         return win;
     }
 
-    public int countMap(){
+    public int countMap(int idGame){
         int count=0;
+        HashMap<Integer,String> mmm = model(idGame);
         for (Map.Entry<Integer,String> map: mapList.entrySet()){
             if (map.getValue()!=""){
                 count++;
@@ -68,23 +116,23 @@ public class XOImpl implements XOInterface {
         return count;
     }
     @Override
-    public void pushX(int id) {
-        mapList.put(id,"X");
-        modelX.add(id);
+    public void pushX(int idCell, int idGame) {
+        gamesList.get(idGame).put(idCell,"X");
     }
 
     @Override
-    public void pushO(int id) {
-        mapList.put(id,"O");
-        modelO.add(id);
+    public void pushO(int idCell, int idGame) {
+        gamesList.get(idGame).put(idCell,"O");
     }
 
     @Override
-    public HashMap<Integer, String> model() {
-//        ArrayList<Integer> list = new ArrayList<Integer>();
-//        list.addAll(modelX);
-//        list.addAll(modelO);
-        return mapList;
+    public HashMap<Integer, String> model(int idGame) {
+        return gamesList.get(idGame);
+    }
+
+    @Override
+    public HashMap<Integer, HashMap<Integer, String>> listModels() {
+        return gamesList;
     }
 
 }
