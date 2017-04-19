@@ -8,6 +8,7 @@ public interface XOInterface {
     void pushX(int idCell, int idGame);
     void pushO(int idCell, int idGame);
     void fillMap();
+    void resetGame(int idGame);
     boolean checkExists(int id, int idGame);
     boolean win(ArrayList<Integer> list);
     String winPresice(int id);

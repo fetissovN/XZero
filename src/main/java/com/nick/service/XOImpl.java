@@ -9,16 +9,16 @@ import java.util.Random;
 
 @Component
 public class XOImpl implements XOInterface {
-//    ArrayList<Integer> modelX = new ArrayList<Integer>();
-//    ArrayList<Integer> modelO = new ArrayList<Integer>();
+
     HashMap<Integer,String> mapList = new HashMap<Integer, String>();
     HashMap<Integer, HashMap<Integer, String>> gamesList = new HashMap<>();
 
     public HashMap<Integer, HashMap<Integer, String>> createNewGame(){
 //        Random random = new Random();
+        gamesList.clear();
         HashMap<Integer, HashMap<Integer, String>> map = new HashMap<Integer,HashMap<Integer,String>>();
         int idGame = 1;
-        if (gamesList.size()>0) {
+            if (gamesList.size()>0) {
             idGame = gamesList.size()+1;
         }
             fillMap();
@@ -32,6 +32,11 @@ public class XOImpl implements XOInterface {
         return null;
     }
 
+    public void resetGame(int idGame){
+        gamesList.get(idGame).clear();
+        fillMap();
+        gamesList.get(idGame).putAll(mapList);
+    }
 
     public void fillMap(){
         mapList.clear();
@@ -43,7 +48,7 @@ public class XOImpl implements XOInterface {
     }
 
     public boolean checkExists(int id, int idGame){
-        if (gamesList.get(idGame).containsKey(id)||gamesList.get(idGame).containsKey(id)){
+        if (!gamesList.get(idGame).get(id).equals("")){
             return true;
         }
         return false;
@@ -77,13 +82,9 @@ public class XOImpl implements XOInterface {
     public boolean win(ArrayList<Integer> listM){
         boolean win = false;
         ArrayList<Integer> list = listM;
-//        if (playerChar.equals("x")){
-//            list = modelX;
-//        }else if (playerChar.equals("o")){
-//            list = modelO;
-//        }
+
         ArrayList<Integer> mass = new ArrayList<Integer>();
-//        mass.clear();
+        mass.clear();
         mass.add(1);
         mass.add(3);
         mass.add(4);
@@ -108,7 +109,7 @@ public class XOImpl implements XOInterface {
     public int countMap(int idGame){
         int count=0;
         HashMap<Integer,String> mmm = model(idGame);
-        for (Map.Entry<Integer,String> map: mapList.entrySet()){
+        for (Map.Entry<Integer,String> map: mmm.entrySet()){
             if (map.getValue()!=""){
                 count++;
             }

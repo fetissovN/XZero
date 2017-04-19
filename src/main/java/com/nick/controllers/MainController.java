@@ -33,15 +33,13 @@ public class MainController {
         HashMap<Integer,HashMap<Integer,String>> modelS = new HashMap<>();
         if (session.getAttribute("game")==null){
             modelS = xoInterface.createNewGame();
-//            modelS.putAll(xoInterface.createNewGame());
             session.setAttribute("game", modelS);
-//            session.setAttribute("id", xoInterface.);
+//            System.out.println(session.getAttribute("game").toString());
+//            System.out.println(modelS.toString());
         }else {
             modelS.putAll((Map<? extends Integer, ? extends HashMap<Integer, String>>) session.getAttribute("game"));
         }
-//        if (xoInterface.model().isEmpty()){
-//            xoInterface.fillMap();
-//        }
+
         int id = modelS.keySet().iterator().next();
         if (xoInterface.countMap(id) > 4) {
             if (xoInterface.winPresice(id).equals("X")) {
@@ -52,17 +50,21 @@ public class MainController {
                 model.addAttribute("bothLoseras", "You are both losers!");
             }
         }
-        model.addAttribute("list", modelS.get(0));
+        System.out.println(modelS.get(1));
+        model.addAttribute("list", modelS.get(1));
         return "main";
     }
 
     @RequestMapping(value = "/push/{id}", method = RequestMethod.GET)
     public String push(@PathVariable("id") int id, Model model, HttpSession session){
+
         HashMap<Integer,HashMap<Integer,String>> modelS = new HashMap<>();
+
         modelS.putAll((Map<? extends Integer, ? extends HashMap<Integer, String>>) session.getAttribute("game"));
+
         int idGame = modelS.keySet().iterator().next();
-        if (xoInterface.winPresice(id)!=null){
-            model.addAttribute("list", modelS);
+        if (xoInterface.winPresice(idGame)!=null){
+            model.addAttribute("list", modelS.get(1));
             return "main";
         }
         if (!xoInterface.checkExists(id, idGame)) {
@@ -74,13 +76,21 @@ public class MainController {
 
         }else {
             model.addAttribute("duplicate", "already exists!");
+            // TODO: 20.04.2017  
+//            return "main";
         }
         return "redirect:/";
     }
 
     @RequestMapping(value = "/restart")
-    public String restart(){
-        xoInterface.fillMap();
+    public String restart(HttpSession session){
+        HashMap<Integer,HashMap<Integer,String>> modelS = new HashMap<>();
+
+        modelS.putAll((Map<? extends Integer, ? extends HashMap<Integer, String>>) session.getAttribute("game"));
+
+        int idGame = ((Map<? extends Integer, ? extends HashMap<Integer,String>>) session.getAttribute("game")).entrySet().iterator().next().getKey();
+        System.out.println(idGame);
+        xoInterface.resetGame(idGame);
         return "redirect:/";
     }
 }
