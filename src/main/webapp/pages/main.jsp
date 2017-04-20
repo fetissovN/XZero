@@ -5,9 +5,9 @@
 <html>
   <head>
         <title>XZero</title>
-      <%--<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>--%>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
       <link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/styles.css"/> ">
-      <%--<link rel="stylesheet" type="text/css" href="<c:url value="/resources/css/foundation.min.css"/> ">--%>
+      <script src="<c:url value="/resources/js/script.js"/> "></script>
   </head>
   <body>
     <h1 class="hello" align="center">Play</h1>
@@ -19,7 +19,6 @@
                 <c:if test="${entity.key eq '3'}">
                     </tr>
                     <tr>
-
                 </c:if>
                 <c:if test="${entity.key eq '6'}">
                     </tr>
@@ -32,13 +31,10 @@
             </c:forEach>
     </table>
     <br>
-    <%--<div align="center">${xWin}${oWin}</div>--%>
-    <%--<button><a href="<c:url value="/restart"/>">Restart</a></button>--%>
     <div align="center">
-        <input type="button" value="Go" onclick="window.location.href='/compTurn'"/>
+        <input id="turn" type="button" value="Go" onclick="window.location.href='/compTurn'" />
+        <label><input id="chb" type="checkbox" name="checkbox" value="value">Play with computer</label>
     </div>
-
-    <%--<label><input type="checkbox" name="checkbox" value="value" onclick="window.location.href='/change'">Text</label>--%>
     <br>
     <div align="center"><a style="text-decoration: none" href="/restart">restart</a></div>
 
