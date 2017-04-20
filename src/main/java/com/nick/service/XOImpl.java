@@ -55,7 +55,7 @@ public class XOImpl implements XOInterface {
     }
 
     public String winPresice(int idGame){
-        String winner = null;
+        String winner = "false";
         ArrayList<Integer> modelX = new ArrayList<Integer>();
         ArrayList<Integer> modelO = new ArrayList<Integer>();
 

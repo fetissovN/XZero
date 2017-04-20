@@ -1,24 +1,24 @@
 package com.nick.controllers;
 
+import com.nick.compModel.Brain;
 import com.nick.service.XOInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 public class MainController {
+
+
+    @Autowired
+    private Brain brain;
 
     private XOInterface xoInterface;
 
@@ -30,21 +30,21 @@ public class MainController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String main(Model model, HttpSession session){
+
         HashMap<Integer,HashMap<Integer,String>> modelS = new HashMap<>();
         if (session.getAttribute("game")==null){
             modelS = xoInterface.createNewGame();
             session.setAttribute("game", modelS);
-//            System.out.println(session.getAttribute("game").toString());
-//            System.out.println(modelS.toString());
         }else {
             modelS.putAll((Map<? extends Integer, ? extends HashMap<Integer, String>>) session.getAttribute("game"));
         }
 
         int id = modelS.keySet().iterator().next();
         if (xoInterface.countMap(id) > 4) {
-            if (xoInterface.winPresice(id).equals("X")) {
+            String winner = xoInterface.winPresice(id);
+            if (winner.equals("X")) {
                 model.addAttribute("xWin", "X Win!");
-            }else if (xoInterface.winPresice(id).equals("O")) {
+            }else if (winner.equals("O")) {
                 model.addAttribute("oWin", "O Win!");
             }else if (xoInterface.countMap(id)==9){
                 model.addAttribute("bothLoseras", "You are both losers!");
@@ -63,7 +63,7 @@ public class MainController {
         modelS.putAll((Map<? extends Integer, ? extends HashMap<Integer, String>>) session.getAttribute("game"));
 
         int idGame = modelS.keySet().iterator().next();
-        if (xoInterface.winPresice(idGame)!=null){
+        if (!xoInterface.winPresice(idGame).equals("false")){
             model.addAttribute("list", modelS.get(1));
             return "main";
         }
@@ -76,8 +76,8 @@ public class MainController {
 
         }else {
             model.addAttribute("duplicate", "already exists!");
-            // TODO: 20.04.2017  
-//            return "main";
+            model.addAttribute("list",modelS.get(1));
+            return "main";
         }
         return "redirect:/";
     }
@@ -93,4 +93,24 @@ public class MainController {
         xoInterface.resetGame(idGame);
         return "redirect:/";
     }
+
+    @RequestMapping(value = "/compTurn")
+    public String compTurn(Model model, HttpSession session){
+        HashMap<Integer,HashMap<Integer,String>> modelS = new HashMap<>();
+
+        modelS.putAll((Map<? extends Integer, ? extends HashMap<Integer, String>>) session.getAttribute("game"));
+
+        int idGame = ((Map<? extends Integer, ? extends HashMap<Integer,String>>) session.getAttribute("game")).entrySet().iterator().next().getKey();
+        if (!xoInterface.winPresice(idGame).equals("false")){
+            model.addAttribute("list", modelS.get(1));
+            return "main";
+        }
+        brain.easyPush(idGame);
+
+        return "redirect:/";
+    }
+
+
+
+
 }

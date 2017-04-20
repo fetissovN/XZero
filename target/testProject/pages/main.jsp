@@ -34,6 +34,13 @@
     <br>
     <%--<div align="center">${xWin}${oWin}</div>--%>
     <%--<button><a href="<c:url value="/restart"/>">Restart</a></button>--%>
+    <div align="center">
+        <input type="button" value="Go" onclick="window.location.href='/compTurn'"/>
+    </div>
+
+    <%--<label><input type="checkbox" name="checkbox" value="value" onclick="window.location.href='/change'">Text</label>--%>
+    <br>
     <div align="center"><a style="text-decoration: none" href="/restart">restart</a></div>
+
   </body>
 </html>
